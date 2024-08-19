@@ -1,6 +1,6 @@
 {
-    "name": "@zerodev/wallet",
-    "version": "0.1.0",
+    "name": "@alibuda/zerodev-wallet",
+    "version": "0.1.6",
     "author": "ZeroDev",
     "main": "./_cjs/index.js",
     "module": "./_esm/index.js",
