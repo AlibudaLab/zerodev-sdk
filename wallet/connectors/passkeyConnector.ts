@@ -104,7 +104,7 @@ export function passkeyConnector(
                 const webAuthnKey = await toWebAuthnKey({
                     passkeyName: passkeyName,
                     passkeyServerUrl: passkeyServerUrl ?? `${ZERODEV_PASSKEY_URL}/${projectId}`,
-                    mode
+                    mode,
                 })
 
                 const passkeyValidator = await toPasskeyValidator(
@@ -112,7 +112,8 @@ export function passkeyConnector(
                     {
                         webAuthnKey,
                         entryPoint: entryPoint,
-                        kernelVersion
+                        kernelVersion,
+                        validatorAddress: '0xbA45a2BFb8De3D24cA9D7F1B551E14dFF5d690Fd' // V0.0.2
                     }
                 )
                 const passkeyData = (
