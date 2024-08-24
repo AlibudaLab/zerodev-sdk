@@ -42,7 +42,9 @@ export function passkeyConnector(
     projectId: string,
     chain: Chain,
     version: ZeroDevVersion,
-    appName?: string
+    appName?: string,
+    passkeyServerUrl?: string,
+    mode?: WebAuthnMode
 ) {
     const passkeyName = appName ?? "ZeroDev Passkey Wallet"
 
@@ -92,19 +94,17 @@ export function passkeyConnector(
                 const entryPoint = getEntryPointFromZeroDevVersion(version)
                 const kernelVersion =
                     getKernelVersionFromZeroDevVersion(version)
-                const passkeySigner = getZerodevSigner()
+                // const passkeySigner = getZerodevSigner()
 
                 const publicClient = createPublicClient({
                     chain,
                     transport: http()
                 })
-                const mode = passkeySigner
-                    ? WebAuthnMode.Login
-                    : WebAuthnMode.Register
+                
                 const webAuthnKey = await toWebAuthnKey({
                     passkeyName: passkeyName,
-                    passkeyServerUrl: `${ZERODEV_PASSKEY_URL}/${projectId}`,
-                    mode
+                    passkeyServerUrl: passkeyServerUrl ?? `${ZERODEV_PASSKEY_URL}/${projectId}`,
+                    mode,
                 })
 
                 const passkeyValidator = await toPasskeyValidator(
@@ -112,7 +112,8 @@ export function passkeyConnector(
                     {
                         webAuthnKey,
                         entryPoint: entryPoint,
-                        kernelVersion
+                        kernelVersion,
+                        validatorAddress: '0xbA45a2BFb8De3D24cA9D7F1B551E14dFF5d690Fd' // V0.0.2
                     }
                 )
                 const passkeyData = (
